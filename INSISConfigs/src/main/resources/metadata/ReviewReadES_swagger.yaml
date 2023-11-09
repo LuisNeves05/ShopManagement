@@ -1,0 +1,51 @@
+openapi: 3.0.1
+info:
+  title: ReviewReadES
+  description: API Definition of ReviewReadES
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/review-read-es
+paths:
+  /producto/{sku}/evaluaciones/{status}:
+    get:
+      parameters:
+      - name: sku
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: status
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response
+  /evaluaciones/{userID}:
+    get:
+      parameters:
+      - name: userID
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response
+  /evaluaciones:
+    get:
+      responses:
+        default:
+          description: Default response
+  /evaluaciones/pendiente:
+    get:
+      responses:
+        default:
+          description: Default response

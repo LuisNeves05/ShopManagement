@@ -1,0 +1,195 @@
+services:
+
+  ##BOOTSTRAP
+  postgres-bootstrap:
+    container_name: Bootstrap-db
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: bootstrap-db
+      PGDATA: /data/postgresBootstrap
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5436:5432"
+    networks:
+      - postgres-bootstrap
+    restart: unless-stopped
+
+  ##PRODUCT WRITE
+  postgres-product-w:
+    container_name: Product-db-w
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: product-db-w
+      PGDATA: /data/postgresProductW
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres-product-w
+    restart: unless-stopped
+
+  ##PRODUCT READ
+  postgres-product-r:
+    container_name: Product-db-r
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: product-db-r
+      PGDATA: /data/postgresProductR
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5433:5432"
+    networks:
+      - postgres-product-r
+    restart: unless-stopped
+
+  ##REVIEW WRITE
+  postgres-review-w:
+    container_name: Review-db-w
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: review-db-w
+      PGDATA: /data/postgresReviewW
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5434:5432"
+    networks:
+      - postgres-review-w
+    restart: unless-stopped
+
+  ##REVIEW READ
+  postgres-review-r:
+    container_name: Review-db-r
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: review-db-r
+      PGDATA: /data/postgresReviewR
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5435:5432"
+    networks:
+      - postgres-review-r
+    restart: unless-stopped
+
+  postgres-vote-w:
+    container_name: Vote-db-w
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: vote-db-w
+      PGDATA: /data/postgresVoteW
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5437:5432"
+    networks:
+      - postgres-review-r
+    restart: unless-stopped
+
+  postgres-vote-r:
+    container_name: Vote-db-r
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: vote-db-r
+      PGDATA: /data/postgresVoteR
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5438:5432"
+    networks:
+      - postgres-vote-r
+    restart: unless-stopped
+
+  ##Adminer
+  adminer:
+    container_name: adminer
+    image: adminer
+    ports:
+      - "8080:8080"
+    networks:
+      - postgres-product-r
+      - postgres-review-r
+      - postgres-product-w
+      - postgres-review-w
+      - postgres-bootstrap
+      - postgres-vote-w
+      - postgres-vote-r
+
+    restart: unless-stopped
+
+  wso2am:
+    image: wso2/wso2am:4.0.0
+    ports:
+      - 9443:9443
+    volumes:
+      - ./deployment.toml:/home/wso2carbon/wso2am-4.0.0/repository/conf/deployment.toml
+    depends_on:
+      - postgres_apim_db
+      - postgres_shared_db
+
+  postgres_apim_db:
+    image: postgres:13
+    ports:
+      - 5450:5432
+    environment:
+      POSTGRES_DB: WSO2AM_DB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_apim_db_data:/var/lib/postgresql/data
+
+  postgres_shared_db:
+    image: postgres:13
+    ports:
+      - 5451:5432
+    environment:
+      POSTGRES_DB: WSO2SHARED_DB
+      POSTGRES_USER: wso2carbon
+      POSTGRES_PASSWORD: wso2carbon
+    volumes:
+      - postgres_shared_db_data:/var/lib/postgresql/data
+
+networks:
+  postgres-product-w:
+    driver: bridge
+  postgres-review-w:
+    driver: bridge
+  postgres-product-r:
+    driver: bridge
+  postgres-review-r:
+    driver: bridge
+  postgres-bootstrap:
+    driver: bridge
+  postgres-vote-w:
+    driver: bridge
+  postgres-vote-r:
+    driver: bridge
+  product-command-application:
+    driver: bridge
+  insis-db:
+    driver: bridge
+
+volumes:
+  postgres:
+  adminer:
+  postgres-data:
+  postgres_apim_db_data:
+  postgres_shared_db_data:
+

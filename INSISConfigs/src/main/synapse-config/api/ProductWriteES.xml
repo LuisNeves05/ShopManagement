@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/product-write-es" name="ProductWriteES" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/produtos/crear">
+        <inSequence>
+            <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+            <call>
+                <endpoint key="CrearProductoEP"/>
+                <target type="body"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="PATCH" uri-template="/producto/{sku}">
+        <inSequence>
+            <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+            <property expression="$ctx:uri.var.sku" name="pathVariable" scope="default" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), get-property('pathVariable'))" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <call>
+                <endpoint key="ActualizarProducto"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="DELETE" uri-template="/producto/{sku}">
+        <inSequence>
+            <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+            <property expression="$ctx:uri.var.sku" name="pathVariable" scope="default" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), get-property('pathVariable'))" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <call>
+                <endpoint key="EliminarProducto"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

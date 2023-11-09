@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/review-write-es" name="ReviewWriteES" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/producto/{sku}/evaluaciones">
+        <inSequence>
+            <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+            <property expression="$ctx:uri.var.sku" name="sku" scope="default" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), '/products/')" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), get-property('sku'))" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), '/reviews')" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <call>
+                <endpoint key="ReviewWriteEP"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="PUT" uri-template="/evaluaciones/{evaluacionID}/voto">
+        <inSequence>
+            <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+            <property expression="$ctx:uri.var.avaliacaoID" name="evaluacionID" scope="default" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), '/reviews/')" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), get-property('evaluacionID'))" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), '/vote')" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <call>
+                <endpoint key="ReviewWriteEP"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="DELETE" uri-template="/evaluaciones/{evaluacionID}">
+        <inSequence>
+            <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+            <property expression="$ctx:uri.var.avaliacaoID" name="evaluacionID" scope="default" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), '/reviews/')" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), get-property('evaluacionID'))" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <call>
+                <endpoint key="ReviewWriteEP"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="PUT" uri-template="/evaluaciones/aceptar-rechazar/{evaluacionID}">
+        <inSequence>
+            <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+            <property expression="$ctx:uri.var.avaliacaoID" name="evaluacionID" scope="default" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), '/reviews/acceptreject/')" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), get-property('evaluacionID'))" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <call>
+                <endpoint key="ReviewWriteEP"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

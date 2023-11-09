@@ -1,0 +1,34 @@
+openapi: 3.0.1
+info:
+  title: ProductReadES
+  description: API Definition of ProductReadES
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/product-read-es
+paths:
+  /productos/{sku}:
+    get:
+      parameters:
+      - name: sku
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response
+  /productos/designacion/{designacion}:
+    get:
+      parameters:
+      - name: designacion
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response

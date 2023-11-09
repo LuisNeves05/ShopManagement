@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="ProductWriteES" groupId="com.example.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/ProductWriteES.xml</file>
+    </artifact>
+    <artifact name="ProductWriteES_swagger" groupId="com.example.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/ProductWriteES_swagger.yaml</file>
+    </artifact>
+    <artifact name="ProductWriteES_metadata" groupId="com.example.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/ProductWriteES_metadata.yaml</file>
+    </artifact>
+    <artifact name="ProductReadES" groupId="com.example.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/ProductReadES.xml</file>
+    </artifact>
+    <artifact name="ProductReadES_swagger" groupId="com.example.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/ProductReadES_swagger.yaml</file>
+    </artifact>
+    <artifact name="ProductReadES_metadata" groupId="com.example.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/ProductReadES_metadata.yaml</file>
+    </artifact>
+    <artifact name="ReviewReadES" groupId="com.example.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/ReviewReadES.xml</file>
+    </artifact>
+    <artifact name="ReviewReadES_swagger" groupId="com.example.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/ReviewReadES_swagger.yaml</file>
+    </artifact>
+    <artifact name="ReviewReadES_metadata" groupId="com.example.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/ReviewReadES_metadata.yaml</file>
+    </artifact>
+    <artifact name="ReviewWriteES" groupId="com.example.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/ReviewWriteES.xml</file>
+    </artifact>
+    <artifact name="ReviewWriteES_swagger" groupId="com.example.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/ReviewWriteES_swagger.yaml</file>
+    </artifact>
+    <artifact name="ReviewWriteES_metadata" groupId="com.example.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/ReviewWriteES_metadata.yaml</file>
+    </artifact>
+    <artifact name="VoteReadES" groupId="com.example.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/VoteReadES.xml</file>
+    </artifact>
+    <artifact name="VoteReadES1_swagger" groupId="com.example.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/VoteReadES1_swagger.yaml</file>
+    </artifact>
+    <artifact name="VoteReadES1_metadata" groupId="com.example.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/VoteReadES1_metadata.yaml</file>
+    </artifact>
+    <artifact name="ActualizarProducto" groupId="com.example.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/ActualizarProducto.xml</file>
+    </artifact>
+    <artifact name="BuscarProductoPeloSkuEP" groupId="com.example.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/BuscarProductoPeloSkuEP.xml</file>
+    </artifact>
+    <artifact name="CrearProductoEP" groupId="com.example.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/CrearProductoEP.xml</file>
+    </artifact>
+    <artifact name="EliminarProducto" groupId="com.example.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/EliminarProducto.xml</file>
+    </artifact>
+    <artifact name="ReviewReadEP" groupId="com.example.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/ReviewReadEP.xml</file>
+    </artifact>
+    <artifact name="ReviewWriteEP" groupId="com.example.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/ReviewWriteEP.xml</file>
+    </artifact>
+    <artifact name="VotesReadEP" groupId="com.example.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/VotesReadEP.xml</file>
+    </artifact>
+    <artifact name="BuscarVotosEP" groupId="com.example.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/BuscarVotosEP.xml</file>
+    </artifact>
+    <artifact name="EvaluacionesPendientes" groupId="com.example.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/EvaluacionesPendientes.xml</file>
+    </artifact>
+    <artifact name="BuscarEvaluationes" groupId="com.example.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/BuscarEvaluationes.xml</file>
+    </artifact>
+</artifacts>

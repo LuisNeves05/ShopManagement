@@ -1,0 +1,58 @@
+openapi: 3.0.1
+info:
+  title: ProductWriteES
+  description: API Definition of ProductWriteES
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/product-write-es
+paths:
+  /produtos/crear:
+    post:
+      requestBody:
+        description: Sample Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: object
+        required: false
+      responses:
+        default:
+          description: Default response
+  /producto/{sku}:
+    delete:
+      parameters:
+      - name: sku
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response
+    patch:
+      parameters:
+      - name: sku
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Sample Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: object
+        required: false
+      responses:
+        default:
+          description: Default response

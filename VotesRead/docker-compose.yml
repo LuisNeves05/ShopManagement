@@ -1,0 +1,25 @@
+services:
+  
+  votes-read-application-1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8085"
+  
+  votes-read-application-2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8086:8085"
+  
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: INSIS
+    volumes:
+      - ./data:/data/db
+    ports:
+      - 27017:27017

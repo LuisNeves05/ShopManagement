@@ -1,0 +1,90 @@
+openapi: 3.0.1
+info:
+  title: ReviewWriteES
+  description: API Definition of ReviewWriteES
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/review-write-es
+paths:
+  /producto/{sku}/evaluaciones:
+    post:
+      parameters:
+      - name: sku
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Sample Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: object
+        required: false
+      responses:
+        default:
+          description: Default response
+  /evaluaciones/{evaluacionID}/voto:
+    put:
+      parameters:
+      - name: evaluacionID
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Sample Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: object
+        required: false
+      responses:
+        default:
+          description: Default response
+  /evaluaciones/{evaluacionID}:
+    delete:
+      parameters:
+      - name: evaluacionID
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response
+  /evaluaciones/aceptar-rechazar/{evaluacionID}:
+    put:
+      parameters:
+      - name: evaluacionID
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Sample Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: object
+        required: false
+      responses:
+        default:
+          description: Default response

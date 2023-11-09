@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/vote-read-es" name="VoteReadES" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET" uri-template="/votos">
+        <inSequence>
+            <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+            <call>
+                <endpoint key="VotesReadEP"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="/votos/{voteID}">
+        <inSequence>
+            <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+            <property expression="$ctx:uri.var.voteID" name="voteID" scope="default" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), get-property('voteID'))" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <call>
+                <endpoint key="VotesReadEP"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="/votos/usuario/{userid}">
+        <inSequence>
+            <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+            <call>
+                <endpoint key="VotesReadEP"/>
+            </call>
+            <script language="js"><![CDATA[var payload1 = mc.getPayloadJSON();
+						var userid = mc.getProperty('uri.var.userid');
+						var list = [];
+						// Iterate over
+						for (var i = 0; i < payload1.length; i++) {
+						    var vote = payload1[i];
+						    if(vote.username.trim() == userid.trim()){
+						        list.push(vote);
+						    }
+						}
+						
+						var response = {};
+						response.list = list;
+						
+						mc.setPayloadJSON(response);]]></script>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="/votos/evaluaciones/{number}">
+        <inSequence>
+            <property expression="$ctx:uri.var.number" name="number" scope="default" type="STRING"/>
+            <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+            <clone>
+                <target>
+                    <sequence>
+                        <call>
+                            <endpoint key="VotesReadEP"/>
+                        </call>
+                        <property name="ContentType" scope="axis2" type="STRING" value="application/json"/>
+                        <property expression="json-eval($)" name="votesList" scope="default" type="STRING"/>
+                    </sequence>
+                </target>
+                <target>
+                    <sequence>
+                        <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+                        <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), '/reviews')" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+                        <call>
+                            <endpoint key="ReviewReadEP"/>
+                        </call>
+                        <property name="ContentType" scope="axis2" type="STRING" value="application/json"/>
+                        <property expression="json-eval($)" name="reviewList" scope="default" type="STRING"/>
+                    </sequence>
+                </target>
+            </clone>
+            <aggregate id="Aggregator">
+                <completeCondition>
+                    <messageCount max="2" min="2"/>
+                </completeCondition>
+                <onComplete aggregateElementType="root" enclosingElementProperty="combinedPayload" expression="/s11:Envelope/s11:Body/child::*[position()=1] | /s12:Envelope/s12:Body/child::*[position()=1]" xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/" xmlns:s12="http://www.w3.org/2003/05/soap-envelope">
+                    <log level="custom">
+                        <property expression="json-eval($)" name="payload1"/>
+                        <property expression="json-eval($)" name="payload2"/>
+                        <property name="INFO" value="Inside onComplete"/>
+                    </log>
+                    <property expression="json-eval($)" name="payload1" scope="default" type="STRING"/>
+                    <property expression="json-eval($)" name="payload2" scope="default" type="STRING"/>
+                    <script language="js"><![CDATA[var payload1 = mc.getProperty('payload1');
+	                    var payload2 = mc.getProperty('payload2');
+	                    var user = mc.getProperty('number');
+	                    var votes = JSON.parse(payload1);
+	                    var reviews = JSON.parse(payload2);
+	
+	                    var list = [];
+	                    for (var i = 0; i < reviews.length; i++) {
+	                        var review = reviews[i];
+	                        for (var j = 0; j < votes.length; j++) {
+	                            var vote = votes[j];
+	                            if (vote.reviewId === review.idReview && review.username == user) {
+	                                list.push(vote);
+	                            }
+	                        }
+	                    }
+	
+	                    var response = {
+	                        list: list
+	                    };
+	
+	                    mc.setPayloadJSON(response);]]></script>
+                    <respond/>
+                </onComplete>
+            </aggregate>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="/votos/usuarioevaluaciones/{number}/{voteT}">
+        <inSequence>
+            <property expression="$ctx:uri.var.number" name="number" scope="default" type="STRING"/>
+            <property expression="$ctx:uri.var.vote" name="voteT" scope="default" type="STRING"/>
+            <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+            <clone>
+                <target>
+                    <sequence>
+                        <call>
+                            <endpoint key="VotesReadEP"/>
+                        </call>
+                        <property name="ContentType" scope="axis2" type="STRING" value="application/json"/>
+                        <property expression="json-eval($)" name="votesList" scope="default" type="STRING"/>
+                    </sequence>
+                </target>
+                <target>
+                    <sequence>
+                        <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+                        <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), '/reviews')" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+                        <call>
+                            <endpoint key="ReviewReadEP"/>
+                        </call>
+                        <property name="ContentType" scope="axis2" type="STRING" value="application/json"/>
+                        <property expression="json-eval($)" name="reviewList" scope="default" type="STRING"/>
+                    </sequence>
+                </target>
+            </clone>
+            <aggregate id="Aggregator">
+                <completeCondition>
+                    <messageCount max="2" min="2"/>
+                </completeCondition>
+                <onComplete aggregateElementType="root" enclosingElementProperty="combinedPayload" expression="/s11:Envelope/s11:Body/child::*[position()=1] | /s12:Envelope/s12:Body/child::*[position()=1]" xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/" xmlns:s12="http://www.w3.org/2003/05/soap-envelope">
+                    <log level="custom">
+                        <property expression="json-eval($)" name="payload1"/>
+                        <property expression="json-eval($)" name="payload2"/>
+                        <property name="INFO" value="Inside onComplete"/>
+                    </log>
+                    <property expression="json-eval($)" name="payload1" scope="default" type="STRING"/>
+                    <property expression="json-eval($)" name="payload2" scope="default" type="STRING"/>
+                    <script language="js"><![CDATA[var payload1 = mc.getProperty('payload1');
+	                    var payload2 = mc.getProperty('payload2');
+	                    var user = mc.getProperty('number');
+	                    var voteType = mc.getProperty('voteT');
+	                    var votes = JSON.parse(payload1);
+	                    var reviews = JSON.parse(payload2);
+	
+	                    var list = [];
+	                    var count = 0;
+	                    for (var i = 0; i < reviews.length; i++) {
+	                        var review = reviews[i];
+	                        if(review.username == user){
+		                        for (var j = 0; j < votes.length; j++) {
+		                            var vote = votes[j];
+		                            if (vote.reviewId === review.idReview && vote.status == voteType) {
+		                            	count++;
+		                            }
+		                        }
+	                        }
+	                    }
+	                    
+	                    list.push(count);
+	
+	                    var response = {
+	                        list: list
+	                    };
+	
+	                    mc.setPayloadJSON(response);]]></script>
+                    <respond/>
+                </onComplete>
+            </aggregate>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

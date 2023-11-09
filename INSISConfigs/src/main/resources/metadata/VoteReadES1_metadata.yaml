@@ -1,0 +1,11 @@
+---
+key: "VoteReadES1-1.0.0"
+name : "VoteReadES1"
+displayName : "VoteReadES1"
+description: "Sample API"
+version: "1.0.0"
+serviceUrl: "https://{MI_HOST}:{MI_PORT}/votes-read-es"
+definitionType: "OAS3"
+securityType: "BASIC"
+mutualSSLEnabled: false
+apiId : "null"

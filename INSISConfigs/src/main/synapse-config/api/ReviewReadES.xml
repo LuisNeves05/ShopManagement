@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/review-read-es" name="ReviewReadES" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET" uri-template="/producto/{sku}/evaluaciones/{status}">
+        <inSequence>
+            <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+            <property expression="$ctx:uri.var.sku" name="sku" scope="default" type="STRING"/>
+            <property expression="$ctx:uri.var.status" name="status" scope="default" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), '/products/')" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), get-property('sku'))" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), '/reviews')" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), get-property('status'))" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <call>
+                <endpoint key="ReviewReadEP"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="/evaluaciones/{userID}">
+        <inSequence>
+            <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+            <property expression="$ctx:uri.var.userID" name="userID" scope="default" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), '/reviews')" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), get-property('userID'))" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <call>
+                <endpoint key="ReviewReadEP"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="/evaluaciones">
+        <inSequence>
+            <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+            <property expression="fn:concat(get-property('axis2','REST_URL_POSTFIX'), '/reviews')" name="REST_URL_POSTFIX" scope="axis2" type="STRING"/>
+            <call>
+                <endpoint key="ReviewReadEP"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="/evaluaciones/pendiente">
+        <inSequence>
+            <property name="REST_URL_POSTFIX" scope="axis2" type="STRING" value=""/>
+            <call>
+                <endpoint key="EvaluacionesPendientes"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

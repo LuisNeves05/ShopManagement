@@ -1,0 +1,46 @@
+openapi: 3.0.1
+info:
+  title: VoteReadES
+  description: API Definition of VoteReadES1
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/vote-read-pt
+paths:
+  /votos:
+    get:
+      responses:
+        default:
+          description: Default response
+  /votos/{voteID}:
+    get:
+      parameters:
+      - name: voteID
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response
+  /votos/usuario/{userid}:
+    get:
+      parameters:
+      - name: userid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response
+  /votos/evaluaciones/{number}:
+    get:
+      parameters:
+      - name: number
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response
